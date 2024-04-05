@@ -38,7 +38,7 @@ struct DetailView: View {
                         .offset(x: -5, y: -5)
                 }
                 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 8) {
                     Text(book.author)
                         .font(.largeTitle)
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
@@ -46,7 +46,9 @@ struct DetailView: View {
                     
                     RatingView(rating: .constant(book.rating))
                         .font(.largeTitle)
-                        .padding(EdgeInsets(top: 8.0, leading: 0, bottom: 0, trailing: 0))
+                    
+                    Text("Added on \(book.creationDate.formatted())")
+                        .foregroundStyle(.secondary)
                 }
                 .padding()
             }

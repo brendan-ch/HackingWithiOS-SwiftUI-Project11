@@ -18,12 +18,16 @@ struct AddBookView: View {
     @State private var genre = "Fantasy"
     @State private var review = ""
     
+    var inputIsReady: Bool {
+        !title.isEmpty && !author.isEmpty && !review.isEmpty
+    }
+    
     let genres = ["Fantasy", "Horror", "Kids", "Mystery", "Poetry", "Romance", "Thriller"]
     
     var body: some View {
         NavigationStack {
             Form {
-                Section {
+                Section("Details") {
                     TextField("Name of book", text: $title)
                     TextField("Author's name", text: $author)
                     
@@ -34,7 +38,7 @@ struct AddBookView: View {
                     }
                 }
                 
-                Section("Write a review") {
+                Section("Review") {
                     TextEditor(text: $review)
                     RatingView(rating: $rating)
                 }
@@ -44,6 +48,15 @@ struct AddBookView: View {
                         let book = Book(title: title, author: author, genre: genre, review: review, rating: rating)
                         modelContext.insert(book)
                         
+                        dismiss()
+                    }
+                    .disabled(!inputIsReady)
+                }
+            }
+            .navigationTitle("Add a Book")
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("Dismiss") {
                         dismiss()
                     }
                 }
